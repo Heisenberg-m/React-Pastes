@@ -1,0 +1,76 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.input-group {
+  display: flex;
+  gap: 15px;
+}
+
+.title-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: whitesmoke;
+  padding: 12px 15px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.glow-btn {
+  background: rgba(255, 255, 255, 0.05); /* Glassy dark base */
+  color: rgb(174, 1, 174);
+  border: 1px solid rgb(174, 1, 174);
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.glow-btn:hover {
+  background: rgb(174, 1, 174);
+  color: whitesmoke;
+  box-shadow: 0 0 20px rgba(175, 3, 172, 0.5);
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Click / Mobile Tap: Snaps down quickly */
+.glow-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 10px rgba(175, 3, 172, 0.4);
+}
+
+.textarea {
+  display: flex;
+  flex-direction: column;
+}
+
+.content-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: whitesmoke;
+  padding: 15px;
+  font-size: 15px;
+  font-family: "Courier New", Courier, monospace;
+  outline: none;
+  resize: vertical;
+  min-height: 300px;
+  transition: border-color 0.2s;
+}
+
+.title-input:focus,
+.content-input:focus {
+  border-color: rgb(174, 1, 174);
+}

@@ -1,0 +1,21 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 30px;
+}
+
+#logo {
+  font-size: 30px;
+  font-weight: bold;
+  color: whitesmoke;
+}
+
+#search {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  color: whitesmoke;
+  padding: 10px 15px;
+  outline: none;
+}
