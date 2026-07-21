@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import "./PasteCard.css";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { doc, deleteDoc } from "firebase/firestore";
+import { db } from "../FirebaseConfig/FirebaseConfig";
 
 const PasteCard = ({ pasteList, search, setPasteList }) => {
   //////////////////// State to track which paste was just copied
@@ -18,16 +20,21 @@ const PasteCard = ({ pasteList, search, setPasteList }) => {
     return matchesTitle || matchesContent;
   });
   //////////////Handeler to delete a paste/////////
-  function handleDelete(id) {
-    const updatedPastes = pasteList.filter((paste) => paste.id !== id);
-    setPasteList(updatedPastes);
-  }
+  const handleDelete = async (id) => {
+    try {
+      await deleteDoc(doc(db, "Pastes", id));
+      const updatedPastes = pasteList.filter((paste) => paste.id !== id);
+      setPasteList(updatedPastes);
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+      alert("Failed to delete the paste. Please try again.");
+    }
+  };
 
   return (
     <div className="paste-list-container">
       {filteredPastes.map((paste) => {
-        const readableDate = new Date(paste.id).toDateString();
-
+        const readableDate = paste.createdAt?.toDate().toDateString();
         return (
           <div className="paste-card" key={paste.id}>
             <div className="paste-card-header">
@@ -49,7 +56,7 @@ const PasteCard = ({ pasteList, search, setPasteList }) => {
                 text={paste.content}
                 onCopy={() => {
                   setCopiedId(paste.id);
-                  // timeout function to set the button back to "Copy" after 2 seconds
+                  // timeoutto set the button back to Copy after 2 seconds
                   setTimeout(() => {
                     setCopiedId(null);
                   }, 2000);

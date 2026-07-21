@@ -1,27 +1,37 @@
 import React, { useState } from "react";
 import "./CreatePaste.css";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { db } from "../FirebaseConfig/FirebaseConfig";
 
 const CreatePaste = ({ search, setSearch, pasteList, setPasteList }) => {
-  // const [pasteList, setPasteList] = useState([]);
   const [newPaste, setNewPaste] = useState({
     title: "",
     content: "",
   });
-
-  const HandleAddPaste = () => {
+  // Handler for adding a new paste
+  const HandleAddPaste = async () => {
     if (!newPaste.title || !newPaste.content) {
       alert("Error adding paste, please fill all fields");
       return;
     }
 
     const CreateNewPaste = {
-      id: Date.now(),
+      createdAt: Timestamp.now(),
       title: newPaste.title,
       content: newPaste.content,
     };
 
-    setPasteList([...pasteList, CreateNewPaste]);
-    setNewPaste({ title: "", content: "" });
+    try {
+      const docRef = await addDoc(collection(db, "Pastes"), CreateNewPaste);
+      //Updating List and adding the id manually
+      // so that it is update in the local state for delete and edit functionality
+      setPasteList([...pasteList, { id: docRef.id, ...CreateNewPaste }]);
+      //Clear the input fields
+      setNewPaste({ title: "", content: "" });
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      alert("There was an error saving your paste.");
+    }
   };
 
   return (
