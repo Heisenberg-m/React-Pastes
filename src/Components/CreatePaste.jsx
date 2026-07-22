@@ -19,6 +19,7 @@ const CreatePaste = ({ search, setSearch, pasteList, setPasteList }) => {
       createdAt: Timestamp.now(),
       title: newPaste.title,
       content: newPaste.content,
+      isFavourite: false,
     };
 
     try {

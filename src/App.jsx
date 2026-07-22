@@ -1,23 +1,16 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import SideRays from "./Components/React Bits/Siderays";
 import Navbar from "./Components/Navbar";
-import CreatePaste from "./Components/CreatePaste";
-import PasteCard from "./Components/PasteCard";
 import { db } from "./FirebaseConfig/FirebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
+import HomeRoute from "./Router/HomeRoute";
+import ViewEditRoute from "./Router/ViewEditRoute";
 
 function App() {
-  // defining the search state here so that it can be passed a prop to the child components
   const [search, setSearch] = useState("");
-  const [pasteList, setPasteList] = useState([
-    // {
-    //   id: 1784125439105,
-    //   title: "Sample Paste",
-    //   content:
-    //     "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    // },
-  ]);
+  const [pasteList, setPasteList] = useState([]);
 
   useEffect(() => {
     const fetchPastes = async () => {
@@ -27,7 +20,6 @@ function App() {
           id: doc.id,
           ...doc.data(),
         }));
-
         setPasteList(items);
       } catch (error) {
         console.error("Error fetching data from Firestore: ", error);
@@ -37,26 +29,39 @@ function App() {
   }, []);
 
   return (
-    <div className="main-container">
-      <div className="siderays-bg">
-        <SideRays />
-      </div>
+    <Router>
+      <div className="main-container">
+        <div className="siderays-bg">
+          <SideRays />
+        </div>
 
-      <div className="app-content">
-        <Navbar search={search} setSearch={setSearch} />
-        <CreatePaste
-          search={search}
-          setSearch={setSearch}
-          pasteList={pasteList}
-          setPasteList={setPasteList}
-        />
-        <PasteCard
-          pasteList={pasteList}
-          search={search}
-          setPasteList={setPasteList}
-        />
+        <div className="app-content">
+          <Navbar search={search} setSearch={setSearch} />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <HomeRoute
+                  search={search}
+                  setSearch={setSearch}
+                  pasteList={pasteList}
+                  setPasteList={setPasteList}
+                />
+              }
+            />
+            <Route
+              path="/paste/:id"
+              element={
+                <ViewEditRoute
+                  pasteList={pasteList}
+                  setPasteList={setPasteList}
+                />
+              }
+            />
+          </Routes>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 

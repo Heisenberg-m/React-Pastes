@@ -110,3 +110,35 @@
 .card-btn.outline:hover {
   background: rgba(234, 179, 8, 0.1);
 }
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.star-btn {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 26px;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
+  line-height: 1;
+}
+
+.star-btn:hover {
+  color: #eab308;
+  transform: scale(1.15);
+}
+
+.star-btn.favourited {
+  color: #eab308;
+}
