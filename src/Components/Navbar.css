@@ -9,6 +9,13 @@
   font-size: 30px;
   font-weight: bold;
   color: whitesmoke;
+  margin: 0;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 #search {
@@ -18,4 +25,20 @@
   color: whitesmoke;
   padding: 10px 15px;
   outline: none;
+}
+#logout-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: whitesmoke;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#logout-btn:hover {
+  background: rgba(233, 4, 4, 0.677);
+  color: whitesmoke;
 }

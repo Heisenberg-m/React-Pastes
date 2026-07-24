@@ -91,3 +91,30 @@
 .toggle-link:hover {
   color: rgb(174, 1, 174);
 }
+.auth-btn.outline {
+  background: transparent;
+  color: whitesmoke;
+  border: 1px solid rgb(174, 1, 174);
+  margin-top: 5px;
+}
+
+.auth-btn.outline:hover {
+  background: rgba(174, 1, 174, 0.1);
+  color: #facc15;
+}
+#error-msg-para {
+  color: #d71919;
+  font-size: 14px;
+  text-align: center;
+}
+
+.auth-btn:disabled {
+  background: rgba(174, 1, 174, 0.4);
+  color: rgba(255, 255, 255, 0.7);
+  cursor: not-allowed;
+}
+
+.auth-btn:disabled:hover {
+  background: rgba(174, 1, 174, 0.4);
+  color: rgba(255, 255, 255, 0.7);
+}

@@ -1,23 +1,64 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "./Auth.css"; // Using the same shared CSS
+import { Link, useNavigate } from "react-router-dom";
+import "./Auth.css";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../FirebaseConfig/FirebaseConfig";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Registering with:", formData);
-    // Firebase Sign Up logic will go here
+    setIsSubmitting(true);
+
+    try {
+      await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password,
+      );
+
+      toast.success("Account created successfully!");
+      navigate("/");
+    } catch (error) {
+      console.error("Signup error:", error.code);
+
+      toast.error("Failed to create account. Email may already be in use.");
+
+      setTimeout(() => {
+        setIsSubmitting(false);
+      }, 5000);
+    }
+  };
+
+  const handleGoogleSignUp = async () => {
+    setIsSubmitting(true);
+    try {
+      await signInWithPopup(auth, googleProvider);
+
+      toast.success("Account created successfully!");
+      navigate("/");
+    } catch (error) {
+      console.error("Google Signup error:", error.code);
+
+      toast.error("Failed to sign up with Google. Please try again.");
+
+      setTimeout(() => {
+        setIsSubmitting(false);
+      }, 5000);
+    }
   };
 
   return (
@@ -74,8 +115,18 @@ const SignUp = () => {
         </div>
 
         <div className="button-container">
-          <button type="submit" className="auth-btn">
-            Sign Up
+          <button type="submit" className="auth-btn" disabled={isSubmitting}>
+            {isSubmitting ? "Creating Account..." : "Sign Up"}
+          </button>
+        </div>
+        <div className="button-container">
+          <button
+            type="button"
+            className="auth-btn outline"
+            onClick={handleGoogleSignUp}
+            disabled={isSubmitting}
+          >
+            Sign up with Google
           </button>
         </div>
 
