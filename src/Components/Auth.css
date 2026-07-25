@@ -118,3 +118,8 @@
   background: rgba(174, 1, 174, 0.4);
   color: rgba(255, 255, 255, 0.7);
 }
+@media (max-width: 768px) {
+  .form-container {
+    margin: 20px;
+  }
+}

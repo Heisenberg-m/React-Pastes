@@ -42,3 +42,19 @@
   background: rgba(233, 4, 4, 0.677);
   color: whitesmoke;
 }
+
+@media (max-width: 768px) {
+  #logo {
+    font-size: 20px;
+  }
+  .nav-actions {
+    gap: 10px;
+  }
+  #search {
+    width: 60%;
+    margin-left: 20px;
+  }
+  #logout-btn {
+    background: rgba(223, 6, 6, 0.619);
+  }
+}
