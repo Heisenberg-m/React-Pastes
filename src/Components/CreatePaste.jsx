@@ -8,7 +8,9 @@ const CreatePaste = ({ search, setSearch, pasteList, setPasteList }) => {
   const [newPaste, setNewPaste] = useState({
     title: "",
     content: "",
+    colorCode: "red",
   });
+
   // Handler for adding a new paste
   const HandleAddPaste = async () => {
     if (!newPaste.title || !newPaste.content) {
@@ -21,6 +23,7 @@ const CreatePaste = ({ search, setSearch, pasteList, setPasteList }) => {
       title: newPaste.title,
       content: newPaste.content,
       isFavourite: false,
+      colorCode: newPaste.colorCode, // Save the chosen color to the database!
       userId: auth.currentUser.uid,
     };
 
@@ -29,7 +32,9 @@ const CreatePaste = ({ search, setSearch, pasteList, setPasteList }) => {
       //Updating List and adding the id manually
       // so that it is update in the local state for delete and edit functionality
       setPasteList([...pasteList, { id: docRef.id, ...CreateNewPaste }]);
-      setNewPaste({ title: "", content: "" });
+
+      // Clear fields and reset color
+      setNewPaste({ title: "", content: "", colorCode: "red" });
 
       toast.success("Paste created successfully!");
     } catch (error) {
@@ -48,9 +53,27 @@ const CreatePaste = ({ search, setSearch, pasteList, setPasteList }) => {
           value={newPaste.title}
           onChange={(e) => setNewPaste({ ...newPaste, title: e.target.value })}
         />
-        <button className="glow-btn" onClick={HandleAddPaste}>
-          Create Paste
-        </button>
+        <div className="action-row">
+          <select
+            className="color-select"
+            value={newPaste.colorCode}
+            onChange={(e) =>
+              setNewPaste({ ...newPaste, colorCode: e.target.value })
+            }
+            title="Choose a color tag"
+          >
+            <option value="red">🔴</option>
+            <option value="green">🟢</option>
+            <option value="blue">🔵</option>
+            <option value="yellow">🟡</option>
+            <option value="purple">🟣</option>
+            <option value="orange">🟠</option>
+          </select>
+
+          <button className="glow-btn" onClick={HandleAddPaste}>
+            Create
+          </button>
+        </div>
       </div>
 
       <div className="textarea">

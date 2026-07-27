@@ -11,6 +11,10 @@
   display: flex;
   gap: 15px;
 }
+.action-row {
+  display: flex;
+  gap: 15px;
+}
 
 .title-input {
   flex: 1;
@@ -24,8 +28,26 @@
   transition: border-color 0.2s;
 }
 
+.color-select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: whitesmoke;
+  padding: 12px 10px;
+  font-size: 18px;
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+
+.color-select option {
+  background: #1a1a1a;
+  color: whitesmoke;
+}
+
 .glow-btn {
-  background: rgba(255, 255, 255, 0.05); /* Glassy dark base */
+  background: rgba(255, 255, 255, 0.05);
   color: rgb(174, 1, 174);
   border: 1px solid rgb(174, 1, 174);
   border-radius: 8px;
@@ -41,10 +63,9 @@
   background: rgb(174, 1, 174);
   color: whitesmoke;
   box-shadow: 0 0 20px rgba(175, 3, 172, 0.5);
-  transform: translateY(-2px); /* Slight lift effect */
+  transform: translateY(-2px);
 }
 
-/* Click / Mobile Tap: Snaps down quickly */
 .glow-btn:active {
   transform: scale(0.95);
   box-shadow: 0 0 10px rgba(175, 3, 172, 0.4);
@@ -71,11 +92,27 @@
 }
 
 .title-input:focus,
-.content-input:focus {
+.content-input:focus,
+.color-select:focus {
   border-color: rgb(174, 1, 174);
 }
+
 @media (max-width: 768px) {
+  .input-group {
+    flex-direction: column;
+  }
+
+  .action-row {
+    width: 100%;
+    justify-content: space-between;
+  }
+
   .glow-btn {
+    flex: 1;
     padding: 10px;
+  }
+
+  .color-select {
+    flex: 0 0 60px;
   }
 }

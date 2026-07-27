@@ -5,13 +5,21 @@ import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { db } from "../FirebaseConfig/FirebaseConfig";
 import { useNavigate } from "react-router-dom";
 
+// 1. Define our beautiful theme colors
+const themeColors = {
+  red: "rgb(255, 87, 87)",
+  green: "rgb(0, 230, 118)",
+  blue: "rgb(41, 121, 255)",
+  yellow: "rgb(255, 234, 0)",
+  purple: "rgb(213, 0, 249)",
+  orange: "rgb(255, 145, 0)",
+};
+
 const PasteCard = ({ pasteList, search, setPasteList }) => {
   const navigate = useNavigate();
-
-  ///////// State to track which paste was just copied
   const [copiedId, setCopiedId] = useState(null);
 
-  ///Filter the pastes based on the search input
+  // HomeRoute already filters this, but keeping this here acts as a great safety net!
   const filteredPastes = pasteList.filter((paste) => {
     const matchesTitle = paste.title
       .toLowerCase()
@@ -24,7 +32,6 @@ const PasteCard = ({ pasteList, search, setPasteList }) => {
     return matchesTitle || matchesContent;
   });
 
-  /////Handler to delete a paste
   const handleDelete = async (id) => {
     try {
       await deleteDoc(doc(db, "Pastes", id));
@@ -35,19 +42,15 @@ const PasteCard = ({ pasteList, search, setPasteList }) => {
       alert("Failed to delete the paste. Please try again.");
     }
   };
-  /////Handler to mark favourite
 
   const markFavourite = async (id) => {
     try {
       const pasteToUpdate = pasteList.find((paste) => paste.id === id);
 
-      //////Update Firestore data here
       await updateDoc(doc(db, "Pastes", id), {
         isFavourite: !pasteToUpdate.isFavourite,
       });
 
-      /////Updating the local state specifically for this paste
-      //so that we can render it in the UI
       const updatedPastes = pasteList.map((paste) =>
         paste.id === id ? { ...paste, isFavourite: !paste.isFavourite } : paste,
       );
@@ -63,10 +66,25 @@ const PasteCard = ({ pasteList, search, setPasteList }) => {
     <div className="paste-list-container">
       {filteredPastes.map((paste) => {
         const readableDate = paste.createdAt?.toDate().toDateString();
+
+        // 2. Grab the color based on the paste's data, default to a subtle grey if missing
+        const cardColor =
+          themeColors[paste.colorCode] || "rgba(255, 255, 255, 0.2)";
+
         return (
-          <div className="paste-card" key={paste.id}>
+          <div
+            className="paste-card"
+            key={paste.id}
+            // 3. We pass the color as a CSS variable so the stylesheet can use it!
+            style={{ "--card-color": cardColor }}
+          >
             <div className="paste-card-header">
-              <h3 className="paste-title">{paste.title}</h3>
+              {/* 4. Group the dot and the title together */}
+              <div className="title-group">
+                <span className="status-dot"></span>
+                <h3 className="paste-title">{paste.title}</h3>
+              </div>
+
               <div className="header-right">
                 <span className="paste-date">{readableDate}</span>
                 <button
