@@ -1,16 +1,35 @@
-# React + Vite
+# DropCode
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+DropCode is a modern, responsive, and secure pastebin application built with React and Firebase. It allows users to securely store, organize, and copy code snippets, text notes, and daily todos. 
 
-Currently, two official plugins are available:
+Featuring a sleek dark glass-morphism UI, DropCode comes fully equipped with user authentication, custom color tagging, and instant client-side filtering.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+- **Secure Authentication:** User login and registration using Firebase Authentication (Email/Password & Google Sign-in).
+- **Protected Data:** Firestore security rules ensure users can only view, edit, and delete their own pastes.
+- **Color Tagging:** Assign custom color codes (🔴, 🟢, 🔵, etc.) to pastes for easy visual organization.
+- **Advanced Filtering & Sorting:** Instantly sort pastes by Date (Newest/Oldest), Alphabetically, or filter by specific Color Tags and Favorites without querying the database.
+- **One-Click Copy:** Easily copy code snippets to your clipboard with visual feedback.
+- **Responsive Design:** A fully mobile-optimized layout that looks great on any screen size.
+- **Toast Notifications:** Beautiful, non-intrusive popups for success and error messages using `react-hot-toast`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+- **Frontend:** React.js (Vite)
+- **Routing:** React Router v6
+- **Backend/BaaS:** Firebase (Auth, Firestore, Hosting)
+- **Styling:** Vanilla CSS (Custom Glass-morphism Theme)
+- **Utilities:** `react-copy-to-clipboard`, `react-hot-toast`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Getting Started
+
+To get a local copy up and running, follow these simple steps.
+
+### Prerequisites
+
+Make sure you have Node.js and npm installed on your machine.
+- npm
+  ```sh
+  npm install npm@latest -g
+for the best performance.
