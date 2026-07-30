@@ -17,23 +17,25 @@ function App() {
   const [pasteList, setPasteList] = useState([]);
 
   const [user, setUser] = useState(null);
-
+  /////Checks if the user is already logged in when page renders
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
   }, []);
-
+  //fetching the data from firestore for current logged in user
   useEffect(() => {
     const fetchPastes = async () => {
       try {
         const q = query(
+          ////writing the query
           collection(db, "Pastes"),
           where("userId", "==", user.uid),
         );
 
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await getDocs(q); ///fetching the data
         const items = querySnapshot.docs.map((doc) => ({
+          ///converting it into a javascript obj
           id: doc.id,
           ...doc.data(),
         }));
@@ -54,9 +56,9 @@ function App() {
           position="top-center"
           toastOptions={{
             style: {
-              background: "rgba(255, 255, 255, 0.1)",
+              background: "rgb(13, 13, 13)",
               color: "whitesmoke",
-              border: "1px solid rgba(255, 255, 255, 0.2)",
+              border: "1px solid rgba(255, 255, 255, 0.35)",
               fontFamily: '"Courier New", Courier, monospace',
             },
           }}

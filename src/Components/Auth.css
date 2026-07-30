@@ -118,6 +118,34 @@
   background: rgba(174, 1, 174, 0.4);
   color: rgba(255, 255, 255, 0.7);
 }
+
+.forgot-password-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -10px;
+}
+
+.forgot-password-btn {
+  background: transparent;
+  border: none;
+  color: rgb(174, 1, 174);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.forgot-password-btn:hover {
+  color: #facc15;
+  text-decoration: underline;
+}
+
+.forgot-password-btn:disabled {
+  color: #888;
+  cursor: not-allowed;
+  text-decoration: none;
+}
 @media (max-width: 768px) {
   .form-container {
     margin: 20px;

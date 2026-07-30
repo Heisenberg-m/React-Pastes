@@ -5,7 +5,6 @@ import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { db } from "../FirebaseConfig/FirebaseConfig";
 import { useNavigate } from "react-router-dom";
 
-// 1. Define our beautiful theme colors
 const themeColors = {
   red: "rgb(255, 87, 87)",
   green: "rgb(0, 230, 118)",
@@ -17,9 +16,9 @@ const themeColors = {
 
 const PasteCard = ({ pasteList, search, setPasteList }) => {
   const navigate = useNavigate();
+  //state to track which paste has been copied
   const [copiedId, setCopiedId] = useState(null);
 
-  // HomeRoute already filters this, but keeping this here acts as a great safety net!
   const filteredPastes = pasteList.filter((paste) => {
     const matchesTitle = paste.title
       .toLowerCase()
@@ -31,7 +30,7 @@ const PasteCard = ({ pasteList, search, setPasteList }) => {
 
     return matchesTitle || matchesContent;
   });
-
+  /////Handler for deleting a paste//////
   const handleDelete = async (id) => {
     try {
       await deleteDoc(doc(db, "Pastes", id));
@@ -42,7 +41,7 @@ const PasteCard = ({ pasteList, search, setPasteList }) => {
       alert("Failed to delete the paste. Please try again.");
     }
   };
-
+  //////Hnadler for marking as favourite//////
   const markFavourite = async (id) => {
     try {
       const pasteToUpdate = pasteList.find((paste) => paste.id === id);
@@ -67,7 +66,6 @@ const PasteCard = ({ pasteList, search, setPasteList }) => {
       {filteredPastes.map((paste) => {
         const readableDate = paste.createdAt?.toDate().toDateString();
 
-        // 2. Grab the color based on the paste's data, default to a subtle grey if missing
         const cardColor =
           themeColors[paste.colorCode] || "rgba(255, 255, 255, 0.2)";
 
@@ -75,11 +73,9 @@ const PasteCard = ({ pasteList, search, setPasteList }) => {
           <div
             className="paste-card"
             key={paste.id}
-            // 3. We pass the color as a CSS variable so the stylesheet can use it!
             style={{ "--card-color": cardColor }}
           >
             <div className="paste-card-header">
-              {/* 4. Group the dot and the title together */}
               <div className="title-group">
                 <span className="status-dot"></span>
                 <h3 className="paste-title">{paste.title}</h3>

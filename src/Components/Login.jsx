@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Auth.css";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import { auth, googleProvider } from "../FirebaseConfig/FirebaseConfig";
 import toast from "react-hot-toast";
 
@@ -10,6 +14,7 @@ const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -54,6 +59,28 @@ const Login = () => {
     }
   };
 
+  const handleForgotPassword = async () => {
+    if (!formData.email) {
+      toast.error("Please enter your email address first.");
+      return;
+    }
+
+    setIsResetting(true);
+    try {
+      await sendPasswordResetEmail(auth, formData.email);
+      toast.success("Password reset email sent! Check your inbox.");
+    } catch (error) {
+      console.error("Reset password error:", error.code);
+      if (error.code === "auth/user-not-found") {
+        toast.error("No account found with this email.");
+      } else {
+        toast.error("Failed to send reset email. Please try again.");
+      }
+    } finally {
+      setIsResetting(false);
+    }
+  };
+
   return (
     <div className="auth-main-container">
       <form className="form-container" onSubmit={handleSubmit}>
@@ -80,6 +107,17 @@ const Login = () => {
             onChange={handleChange}
             required
           />
+        </div>
+
+        <div className="forgot-password-wrapper">
+          <button
+            type="button"
+            className="forgot-password-btn"
+            onClick={handleForgotPassword}
+            disabled={isResetting || isSubmitting}
+          >
+            {isResetting ? "Sending..." : "Forgot Password?"}
+          </button>
         </div>
 
         <div className="button-container">
