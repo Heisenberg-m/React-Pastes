@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./PasteCard.css";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
@@ -14,23 +14,32 @@ const themeColors = {
   orange: "rgb(255, 145, 0)",
 };
 
-const PasteCard = ({ pasteList, search, setPasteList }) => {
+const PasteCard = ({ pasteList, setPasteList, search }) => {
   const navigate = useNavigate();
-  //state to track which paste has been copied
   const [copiedId, setCopiedId] = useState(null);
+  const [filteredPastes, setFilteredPastes] = useState(pasteList);
 
-  const filteredPastes = pasteList.filter((paste) => {
-    const matchesTitle = paste.title
-      .toLowerCase()
-      .includes(search.toLowerCase());
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const results = pasteList.filter((paste) => {
+        const matchesTitle = paste.title
+          .toLowerCase()
+          .includes(search.toLowerCase());
 
-    const matchesContent = paste.content
-      .toLowerCase()
-      .includes(search.toLowerCase());
+        const matchesContent = paste.content
+          .toLowerCase()
+          .includes(search.toLowerCase());
 
-    return matchesTitle || matchesContent;
-  });
-  /////Handler for deleting a paste//////
+        return matchesTitle || matchesContent;
+      });
+
+      setFilteredPastes(results);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [search, pasteList]);
+
+  // Delete handler
   const handleDelete = async (id) => {
     try {
       await deleteDoc(doc(db, "Pastes", id));
@@ -41,7 +50,8 @@ const PasteCard = ({ pasteList, search, setPasteList }) => {
       alert("Failed to delete the paste. Please try again.");
     }
   };
-  //////Hnadler for marking as favourite//////
+
+  // Favourite handler
   const markFavourite = async (id) => {
     try {
       const pasteToUpdate = pasteList.find((paste) => paste.id === id);
@@ -65,7 +75,6 @@ const PasteCard = ({ pasteList, search, setPasteList }) => {
     <div className="paste-list-container">
       {filteredPastes.map((paste) => {
         const readableDate = paste.createdAt?.toDate().toDateString();
-
         const cardColor =
           themeColors[paste.colorCode] || "rgba(255, 255, 255, 0.2)";
 
@@ -114,9 +123,7 @@ const PasteCard = ({ pasteList, search, setPasteList }) => {
                 text={paste.content}
                 onCopy={() => {
                   setCopiedId(paste.id);
-                  setTimeout(() => {
-                    setCopiedId(null);
-                  }, 2000);
+                  setTimeout(() => setCopiedId(null), 2000);
                 }}
               >
                 <button className="card-btn outline">
