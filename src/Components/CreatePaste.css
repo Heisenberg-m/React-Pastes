@@ -71,6 +71,54 @@
   box-shadow: 0 0 10px rgba(175, 3, 172, 0.4);
 }
 
+.glow-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.glow-btn:disabled:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgb(174, 1, 174);
+  box-shadow: none;
+  transform: none;
+}
+
+.ai-row {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.word-counter {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.ai-summary-box {
+  background: rgba(174, 1, 174, 0.08);
+  border: 1px solid rgba(174, 1, 174, 0.4);
+  border-radius: 8px;
+  padding: 15px 18px;
+  color: whitesmoke;
+}
+
+.ai-summary-box strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: rgb(174, 1, 174);
+}
+
+.ai-summary-box p {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 15px;
+}
+
 .textarea {
   display: flex;
   flex-direction: column;

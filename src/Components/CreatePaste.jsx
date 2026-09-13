@@ -23,7 +23,7 @@ const CreatePaste = ({ search, setSearch, pasteList, setPasteList }) => {
       title: newPaste.title,
       content: newPaste.content,
       isFavourite: false,
-      colorCode: newPaste.colorCode, // Save the chosen color to the database!
+      colorCode: newPaste.colorCode,
       userId: auth.currentUser.uid,
     };
 
