@@ -1,35 +1,89 @@
-# DropCode
+# 📋 DropCode
 
-DropCode is a modern, responsive, and secure pastebin application built with React and Firebase. It allows users to securely store, organize, and copy code snippets, text notes, and daily todos. 
+An AI-powered notes and paste-sharing web app that helps you save, organize, and quickly find snippets, notes, and pastes — with a little help from AI.
 
-Featuring a sleek dark glass-morphism UI, DropCode comes fully equipped with user authentication, custom color tagging, and instant client-side filtering.
+## 📖 About the Project
+
+DropCode lets you create quick notes or "pastes" with a title and description, tag them with a color for easy categorization, and get back to them fast with search, filters, and favorites. It also uses Google's Gemini API to suggest a title for your note and generate a short AI summary of it.
 
 ## ✨ Features
 
-- **Secure Authentication:** User login and registration using Firebase Authentication (Email/Password & Google Sign-in).
-- **Protected Data:** Firestore security rules ensure users can only view, edit, and delete their own pastes.
-- **Color Tagging:** Assign custom color codes (🔴, 🟢, 🔵, etc.) to pastes for easy visual organization.
-- **Advanced Filtering & Sorting:** Instantly sort pastes by Date (Newest/Oldest), Alphabetically, or filter by specific Color Tags and Favorites without querying the database.
-- **One-Click Copy:** Easily copy code snippets to your clipboard with visual feedback.
-- **Responsive Design:** A fully mobile-optimized layout that looks great on any screen size.
-- **Toast Notifications:** Beautiful, non-intrusive popups for success and error messages using `react-hot-toast`.
+- User sign-up and login (Firebase Authentication)
+- Create, view, edit, and delete notes/pastes with a title and description
+- **Color-coded categories** to organize notes by type
+- Mark notes as **favorites**
+- **Debounced search bar** for fast, smooth searching as you type
+- Filter and sort notes by newest first, oldest first, favorites only, or a specific color code
+- **One-click copy** to clipboard from the note view
+- **AI-suggested titles** and **AI-generated summaries** on the note detail page, powered by the Gemini API
+- Toast notifications for a smooth user experience
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React.js (Vite)
-- **Routing:** React Router v6
-- **Backend/BaaS:** Firebase (Auth, Firestore, Hosting)
-- **Styling:** Vanilla CSS (Custom Glass-morphism Theme)
-- **Utilities:** `react-copy-to-clipboard`, `react-hot-toast`
+- **Frontend:** React.js, React Router, React Hot Toast
+- **Backend/Storage:** Firebase (Authentication + Firestore)
+- **AI:** Google Gemini API (free tier)
 
 ## 🚀 Getting Started
 
-To get a local copy up and running, follow these simple steps.
-
 ### Prerequisites
 
-Make sure you have Node.js and npm installed on your machine.
-- npm
-  ```sh
-  npm install npm@latest -g
-for the best performance.
+- Node.js 16+ and npm
+- A free [Firebase](https://firebase.google.com/) project
+- A free [Google Gemini API](https://ai.google.dev/) key
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Heisenberg-m/DropCode.git
+cd DropCode
+npm install
+```
+
+### 2. Set up environment variables
+
+Create a `.env` file in the project root with your Firebase and Gemini credentials:
+
+```
+REACT_APP_FIREBASE_API_KEY=your-firebase-api-key
+REACT_APP_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+REACT_APP_FIREBASE_PROJECT_ID=your-project-id
+REACT_APP_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
+REACT_APP_FIREBASE_APP_ID=your-app-id
+REACT_APP_GEMINI_API_KEY=your-gemini-api-key
+```
+
+> Rename the prefix if you're not using Create React App — for example, use `VITE_` instead of `REACT_APP_` if the project runs on Vite.
+
+### 3. Run the app
+
+```bash
+npm start        # or `npm run dev` if you're using Vite
+```
+
+The app will open at `http://localhost:3000/` (or `http://localhost:5173/` for Vite).
+
+## 🧑‍💻 Usage
+
+1. Sign up or log in.
+2. Create a new note — give it a title, description, and pick a color category.
+3. Use the search bar, filters, and sort options to find notes quickly.
+4. Open a note to copy it in one click, mark it as a favorite, or generate an AI title/summary.
+
+## 🔮 Future Improvements
+
+- Syntax highlighting for code pastes
+- Shareable public links for notes
+- Dark mode
+- Tag-based (not just color-based) organization
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🙋 Author
+
+**Mridul Anand**
+📧 mridul.katyayan@gmail.com
+🔗 [github.com/Heisenberg-m](https://github.com/Heisenberg-m)
